@@ -54,4 +54,5 @@
     "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
   }
   ```
-- Include the token in the `Authorization` header as `Bearer <token>` for authenticated requests 🛡️
+- Include the token in the `Authorization` header as `Bearer <token>` for authenticated requests🛡️
+ 
