@@ -358,3 +358,5 @@
 /Users/thom/Documents/GitHub/P2-API/obj/Debug/net8.0/ref/D1-P2-API.dll
 /Users/thom/Documents/GitHub/P2-API/bin/Debug/net8.0/BCrypt.Net-Next.dll
 /Users/thom/Documents/GitHub/P2-API/obj/Debug/net8.0/D1-P2-API.sourcelink.json
+/Users/thom/Documents/GitHub/P2-API/bin/Debug/net8.0/AspNetCoreRateLimit.dll
+/Users/thom/Documents/GitHub/P2-API/bin/Debug/net8.0/Newtonsoft.Json.dll

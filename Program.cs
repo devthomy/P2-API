@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using AspNetCoreRateLimit;
 
 Console.Clear();
 Console.ForegroundColor = ConsoleColor.Cyan;
@@ -23,9 +24,40 @@ Console.WriteLine(@"
 └── 🏗️  Builder created");
 Console.ResetColor();
 
+// Add rate limiting services
+builder.Services.AddMemoryCache();
+builder.Services.Configure<IpRateLimitOptions>(options =>
+{
+    options.EnableEndpointRateLimiting = true;
+    options.StackBlockedRequests = false;
+    options.GeneralRules = new List<RateLimitRule>
+    {
+        new RateLimitRule
+        {
+            Endpoint = "*",
+            Period = "1m",
+            Limit = 60
+        }
+    };
+});
+builder.Services.AddSingleton<IIpPolicyStore, MemoryCacheIpPolicyStore>();
+builder.Services.AddSingleton<IRateLimitCounterStore, MemoryCacheRateLimitCounterStore>();
+builder.Services.AddSingleton<IRateLimitConfiguration, RateLimitConfiguration>();
+builder.Services.AddSingleton<IProcessingStrategy, AsyncKeyLockProcessingStrategy>();
+Console.ForegroundColor = ConsoleColor.Green;
+Console.WriteLine("    └── 🔒 Rate limiting configured(1m, 60req/ip)");
+Console.ResetColor();
+
 // Add services to the container
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"), 
+        sqlServerOptionsAction: sqlOptions =>
+        {
+            sqlOptions.EnableRetryOnFailure(
+                maxRetryCount: 5,
+                maxRetryDelay: TimeSpan.FromSeconds(30),
+                errorNumbersToAdd: null);
+        }));
 builder.Services.AddControllers();
 
 // Add JWT Authentication
@@ -69,12 +101,6 @@ try
         Console.ForegroundColor = ConsoleColor.Green;
         Console.WriteLine("    └── 🔌 Database connection successful");
         Console.ResetColor();
-
-        // Seed the database
-        DatabaseInitializer.Seed(scope.ServiceProvider);
-        Console.ForegroundColor = ConsoleColor.Green;
-        Console.WriteLine("    └── 🌱 Database seeded successfully");
-        Console.ResetColor();
     }
 }
 catch (Exception ex)
@@ -92,6 +118,9 @@ if (app.Environment.IsDevelopment())
     Console.WriteLine("    └── 🐛 Development mode enabled");
     Console.ResetColor();
 }
+
+// Add rate limiting middleware
+app.UseIpRateLimiting();
 
 app.UseHttpsRedirection();
 Console.ForegroundColor = ConsoleColor.Red;

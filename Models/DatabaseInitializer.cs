@@ -9,15 +9,18 @@ public static class DatabaseInitializer
     {
         using (var context = new ApplicationDbContext(serviceProvider.GetRequiredService<DbContextOptions<ApplicationDbContext>>()))
         {
-            // Check if users already exist
-            if (context.Users.Any())
-            {
-                Console.WriteLine("Database already seeded with users.");
-                return;
-            }
-
             try
             {
+                // Ensure database is created
+                context.Database.EnsureCreated();
+
+                // Check if users already exist
+                if (context.Users.Any())
+                {
+                    Console.WriteLine("Database already seeded with users.");
+                    return;
+                }
+
                 // Create users
                 var user1 = new User
                 {
@@ -55,10 +58,50 @@ public static class DatabaseInitializer
                 Console.WriteLine("Added teams");
 
                 // Create and add defis
-                var defi1 = new Defi { Title = "Algorithm Implementation", Description = "Implement a sorting algorithm", Points = 15, CreatedAt = DateTime.Now };
-                var defi2 = new Defi { Title = "Debug Code", Description = "Find and fix bugs in the given code", Points = 10, CreatedAt = DateTime.Now };
-                var defi3 = new Defi { Title = "Calculus Problem", Description = "Solve differential equations", Points = 20, CreatedAt = DateTime.Now };
-                var defi4 = new Defi { Title = "Statistics Exercise", Description = "Calculate probability distributions", Points = 15, CreatedAt = DateTime.Now };
+                var defi1 = new Defi { 
+                    Title = "Algorithm Implementation", 
+                    Description = "Implement a sorting algorithm",
+                    QuestionText = "Which sorting algorithm has an average time complexity of O(n log n)?",
+                    Points = 15, 
+                    CreatedAt = DateTime.Now,
+                    Type = DefiType.MultipleChoice,
+                    Option1 = "Bubble Sort",
+                    Option2 = "Quick Sort", 
+                    Option3 = "Merge Sort",
+                    Option4 = "Selection Sort",
+                    CorrectOptionNumber = 2
+                };
+                var defi2 = new Defi { 
+                    Title = "Debug Code", 
+                    Description = "Find and fix bugs in the given code",
+                    QuestionText = "Is this statement correct: A null pointer exception occurs when trying to access an uninitialized variable?",
+                    Points = 10, 
+                    CreatedAt = DateTime.Now,
+                    Type = DefiType.TrueFalse,
+                    CorrectAnswer = true
+                };
+                var defi3 = new Defi { 
+                    Title = "Calculus Problem", 
+                    Description = "Solve differential equations",
+                    QuestionText = "What is the derivative of e^x?",
+                    Points = 20, 
+                    CreatedAt = DateTime.Now,
+                    Type = DefiType.MultipleChoice,
+                    Option1 = "dy/dx = 2x",
+                    Option2 = "dy/dx = x^2",
+                    Option3 = "dy/dx = e^x",
+                    Option4 = "dy/dx = sin(x)",
+                    CorrectOptionNumber = 3
+                };
+                var defi4 = new Defi { 
+                    Title = "Statistics Exercise", 
+                    Description = "Calculate probability distributions",
+                    QuestionText = "In a normal distribution, is the mean always equal to the median?",
+                    Points = 15, 
+                    CreatedAt = DateTime.Now,
+                    Type = DefiType.TrueFalse,
+                    CorrectAnswer = false
+                };
                 context.Defis.AddRange(defi1, defi2, defi3, defi4);
                 context.SaveChanges();
                 Console.WriteLine("Added defis");
