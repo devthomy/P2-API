@@ -356,3 +356,5 @@
 /Users/thom/Documents/GitHub/P2-API/obj/Debug/net8.0/D1-P2-API.pdb
 /Users/thom/Documents/GitHub/P2-API/obj/Debug/net8.0/D1-P2-API.genruntimeconfig.cache
 /Users/thom/Documents/GitHub/P2-API/obj/Debug/net8.0/ref/D1-P2-API.dll
+/Users/thom/Documents/GitHub/P2-API/bin/Debug/net8.0/BCrypt.Net-Next.dll
+/Users/thom/Documents/GitHub/P2-API/obj/Debug/net8.0/D1-P2-API.sourcelink.json

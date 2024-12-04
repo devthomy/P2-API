@@ -4,7 +4,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using Microsoft.Extensions.Configuration;
-using System.Security.Cryptography;
+using BCrypt.Net;
 
 [ApiController]
 [Route("api/[controller]")]
@@ -19,8 +19,9 @@ public class AuthController : ControllerBase
         _configuration = configuration;
     }
 
+
     [HttpPost("login")]
-    public IActionResult Login([FromBody] LoginModel model)
+    public IActionResult Login([FromBody] Models.LoginModel model)
     {
         // Add rate limiting
         var ipAddress = HttpContext.Connection.RemoteIpAddress?.ToString();
@@ -36,8 +37,8 @@ public class AuthController : ControllerBase
             return Unauthorized(new { message = "Authentication failed" });
         }
 
-        // TODO: Implement proper password hashing with salt
-        if (user.Password != model.Password)
+        // Verify password using BCrypt
+        if (!user.VerifyPassword(model.Password))
         {
             Thread.Sleep(Random.Shared.Next(300, 700));
             return Unauthorized(new { message = "Authentication failed" });
@@ -75,10 +76,4 @@ public class AuthController : ControllerBase
         
         return tokenHandler.WriteToken(token);
     }
-}
-
-public class LoginModel
-{
-    public required string Email { get; set; }
-    public required string Password { get; set; }
 }

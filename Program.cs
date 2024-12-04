@@ -58,7 +58,7 @@ Console.WriteLine("\n🔧 Application Configuration:");
 Console.WriteLine("└── 🏭 Application built");
 Console.ResetColor();
 
-// Test database connection
+// Test database connection and seed data
 try
 {
     using (var scope = app.Services.CreateScope())
@@ -69,12 +69,18 @@ try
         Console.ForegroundColor = ConsoleColor.Green;
         Console.WriteLine("    └── 🔌 Database connection successful");
         Console.ResetColor();
+
+        // Seed the database
+        DatabaseInitializer.Seed(scope.ServiceProvider);
+        Console.ForegroundColor = ConsoleColor.Green;
+        Console.WriteLine("    └── 🌱 Database seeded successfully");
+        Console.ResetColor();
     }
 }
 catch (Exception ex)
 {
     Console.ForegroundColor = ConsoleColor.Red;
-    Console.WriteLine($"    └── ❌ Database connection failed: {ex.Message}");
+    Console.WriteLine($"    └── ❌ Database connection or seeding failed: {ex.Message}");
     Console.ResetColor();
     return;
 }

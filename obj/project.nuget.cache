@@ -1,11 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "/o9mx/gAFZc=",
+  "dgSpecHash": "bT6o+UugyoI=",
   "success": true,
   "projectFilePath": "/Users/thom/Documents/GitHub/P2-API/D1-P2-API.csproj",
   "expectedPackageFiles": [
     "/Users/thom/.nuget/packages/azure.core/1.38.0/azure.core.1.38.0.nupkg.sha512",
     "/Users/thom/.nuget/packages/azure.identity/1.11.4/azure.identity.1.11.4.nupkg.sha512",
+    "/Users/thom/.nuget/packages/bcrypt.net-next/4.0.3/bcrypt.net-next.4.0.3.nupkg.sha512",
     "/Users/thom/.nuget/packages/humanizer.core/2.14.1/humanizer.core.2.14.1.nupkg.sha512",
     "/Users/thom/.nuget/packages/microsoft.aspnetcore.authentication.jwtbearer/8.0.3/microsoft.aspnetcore.authentication.jwtbearer.8.0.3.nupkg.sha512",
     "/Users/thom/.nuget/packages/microsoft.bcl.asyncinterfaces/7.0.0/microsoft.bcl.asyncinterfaces.7.0.0.nupkg.sha512",
