@@ -122,11 +122,6 @@ if (app.Environment.IsDevelopment())
 // Add rate limiting middleware
 app.UseIpRateLimiting();
 
-app.UseHttpsRedirection();
-Console.ForegroundColor = ConsoleColor.Red;
-Console.WriteLine("    └── 🔒 HTTPS redirection enabled");
-Console.ResetColor();
-
 app.UseRouting();
 Console.ForegroundColor = ConsoleColor.Yellow;
 Console.WriteLine("    └── 🛣️  Routes configured");
