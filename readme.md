@@ -17,18 +17,6 @@
 2. Run `dotnet run` to start the API 🏃‍♂️
 3. The API will be accessible at `http://localhost:5000` 🌐
 
-## 🌟 API Endpoints
-
-### 🔑 Authentication
-- `POST /auth/login` - User login. Returns a JWT token upon successful authentication. 🎟️
-- `POST /auth/register` - User registration 📝
-
-### 👥 Users
-- `GET /users` - Get all users 👨‍👩‍👧‍👦
-- `GET /users/{id}` - Get user by ID 🆔
-- `POST /users` - Create a new user ✨
-- `PUT /users/{id}` - Update user by ID 🔄
-- `DELETE /users/{id}` - Delete user by ID ❌
 
 ## ⚠️ Error Handling
 - All endpoints return appropriate HTTP status codes 🚦
